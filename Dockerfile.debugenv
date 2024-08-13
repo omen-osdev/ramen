@@ -1,0 +1,7 @@
+FROM qemux/qemu-docker
+RUN apt-get update && apt-get install -y gdb
+RUN echo "file /kernel.elf" > /debug.gdb
+RUN echo "target remote localhost:1234" >> /debug.gdb
+RUN echo "set disassembly-flavor intel" >> /debug.gdb
+RUN echo "b _start" >> /debug.gdb
+RUN echo "c" >> /debug.gdb
