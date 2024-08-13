@@ -21,6 +21,16 @@ echo ""
 echo "Current repository: $repo_url [$branch]"
 echo "VMPORT: $vm_port"
 
+#check if running with privileges, if so warn the user that it's not necessary
+if [ "$EUID" -eq 0 ]; then
+  echo "You are running this script as root, this is not necessary and can cause problems."
+  read -p "Do you want to continue? [y/N] " -n 1 -r
+  echo
+  if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+    exit 1
+  fi
+fi
+
 #check if the flag -h is present
 if [ "$1" == "-h" ]; then
   echo "Usage: ./ramen.sh [options]"
@@ -87,6 +97,12 @@ fi
 
 if ! [ -x "$(command -v losetup)" ]; then
   echo "\e[1;31mError: losetup is not installed.\e[0m" >&2
+  if [ -x "/sbin/losetup" ]; then
+    echo "losetup exists in /sbin/losetup, creating a symlink..."
+    sudo ln -s /sbin/losetup /usr/bin/losetup
+  else
+    exit 1
+  fi
   exit 1
 fi
 
