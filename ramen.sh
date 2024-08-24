@@ -203,7 +203,7 @@ echo -e "\e[1;34mOK\e[0m"
 echo "Running the image..."
 
 if [ "$debug" == "true" ]; then
-  docker run --detach --name omen-debugenv --rm --privileged -e BOOT_MODE='uefi' -e ARGUMENTS='-cpu qemu64 -d cpu_reset -no-reboot -no-shutdown -machine q35 -m 4G -S -s' -p $vm_port:8006 --device=/dev/kvm --cap-add NET_ADMIN --volume "./build/omen.img:/boot.img:rw"  --volume "./build/kernel.elf:/kernel.elf:ro" --volume "./omen:/omen:ro" omen/debugenv
+  docker run --detach --name omen-debugenv --rm --cap-add=SYS_PTRACE -e BOOT_MODE='uefi' -e ARGUMENTS='-cpu qemu64 -d cpu_reset -no-reboot -no-shutdown -machine q35 -m 4G -S -s' -p $vm_port:8006 --device=/dev/kvm --cap-add NET_ADMIN --volume "./build/omen.img:/boot.img:rw"  --volume "./build/kernel.elf:/kernel.elf:ro" --volume "./omen:/omen:ro" omen/debugenv
 else
   docker run --detach --name omen-runenv --rm -e BOOT_MODE='uefi' -e ARGUMENTS='-cpu qemu64 -d cpu_reset -no-reboot -no-shutdown -machine q35 -m 4G' -p $vm_port:8006 --device=/dev/kvm --cap-add NET_ADMIN --volume "./build/omen.img:/boot.img:rw" omen/runenv
 fi
