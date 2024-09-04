@@ -2,7 +2,7 @@
 
 #set repo_url to the repository url
 repo_url="git@github.com:omen-osdev/omen.git"
-branch="develop"
+branch="feature/vmm"
 vm_port="6644"
 
 echo "██▀███   ▄▄▄       ███▄ ▄███▓▓█████  ███▄    █  "

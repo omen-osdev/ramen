@@ -1,6 +1,6 @@
 FROM ubuntu:latest
 
-RUN apt-get update && apt-get install -y build-essential sudo git make fdisk udev gcc nasm parted gdisk dosfstools tree
+RUN apt-get update && apt-get install -y build-essential sudo mtools git make fdisk udev gcc nasm parted gdisk dosfstools tree
 
 RUN echo "#!/bin/bash" > /build.sh
 RUN echo "cd /omen" >> /build.sh
